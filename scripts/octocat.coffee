@@ -17,5 +17,5 @@ show_octocats = (msg, count) ->
     .get() (err, res, body) ->
       parser = new xml2js.Parser()
       parser.parseString body, (err, result) ->
-        octocats = (r["content"]["div"]["a"]["img"]["@"]["src"] for r in result["entry"])
+        octocats = (r['content'][0]['div'][0]['a'][0]['img'][0]['$']['src'] for r in result.feed.entry)
         msg.send msg.random octocats for i in [1..count]
