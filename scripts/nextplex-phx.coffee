@@ -5,8 +5,8 @@
 #   "cheerio": "~0.12.0"
 #
 # Commands:
-#   techevents today - Shows list of events today, with links
-#   techevents upcoming <count> - Shows upcoming events (default 8)
+#   hubot techevents today - Shows list of events today, with links
+#   hubot techevents upcoming <count> - Shows upcoming events (default 8)
 #
 # Author:
 #   @w33ble
