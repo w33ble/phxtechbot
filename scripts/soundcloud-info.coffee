@@ -31,8 +31,6 @@ fetchUrl = (msg, url) ->
       if res.statusCode is 302
         data = JSON.parse(body)
         showInfo msg, data.location
-      else
-        msg.send "Soundcloud: error: #{url} returned #{res.statusCode}"
 
 showInfo = (msg, url) ->
   msg.http(url)
@@ -54,8 +52,6 @@ getDuration = (time) ->
   m = (h - hours) * 60
   mins = Math.floor m
   secs = Math.round Math.floor((m - mins) * 60)
-  secs = if secs >= 10 then secs else "0#{secs}"
   if hours > 0
-    mins = if mins >= 10 then mins else "0#{mins}"
-    return "#{hours}:#{mins}:#{secs}"
-  return "#{mins}:#{secs}"
+    return "#{hours}h#{mins}m#{secs}s"
+  return "#{mins}m#{secs}s"
