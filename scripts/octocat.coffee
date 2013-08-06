@@ -1,7 +1,12 @@
-# Show random octocat
+# Description
+#   Show random octocat
 #
-# octocat me - a randomly selected octocat
-# octocat bomb me <number> - octocat-splosion!
+# Dependencies:
+#   None
+#
+# Commands:
+#   octocat me - a randomly selected octocat
+#   octocat bomb me <number> - octocat-splosion!
 
 xml2js = require('xml2js')
 

@@ -12,18 +12,19 @@
 #
 # Notes:
 #   For text-based adapters like IRC.
+#   Set the environment var HUBOT_SOUNDCLOUD_CLIENTID to your SoundCloud API client_id for this to work
 #
 # Author:
-#   w33ble
+#   Joe Fleming (@w33ble)
 
 module.exports = (robot) ->
-  if not process.env.HUBOT_SOUNDCLOUD_CLIENTID?
-    console.error "HUBOT_SOUNDCLOUD_CLIENTID is not defined"
-  else
-    robot.hear /(https?:\/\/(www\.)?soundcloud\.com\/)([\d\w\-\/]+)/i, (msg) ->
-      fetchUrl msg, msg.match[0]
+  robot.hear /(https?:\/\/(www\.)?soundcloud\.com\/)([\d\w\-\/]+)/i, (msg) ->
+    fetchUrl msg, msg.match[0]
 
 fetchUrl = (msg, url) ->
+  if not process.env.HUBOT_SOUNDCLOUD_CLIENTID
+    return msg.reply "HUBOT_SOUNDCLOUD_CLIENTID must be defined, see http://developers.soundcloud.com/ to get one"
+
   msg.http("http://api.soundcloud.com/resolve.json?client_id=#{process.env.HUBOT_SOUNDCLOUD_CLIENTID}&url=#{url}")
     .query({
       alt: 'json'
@@ -31,6 +32,10 @@ fetchUrl = (msg, url) ->
       if res.statusCode is 302
         data = JSON.parse(body)
         showInfo msg, data.location
+      else if res.statusCode is 401
+        msg.reply "SoundCloud Error: API sent #{res.statusCode}, check your HUBOT_SOUNDCLOUD_CLIENTID setting"
+      else
+        msg.reply "SoundCloud Error: API resolve returned #{res.statusCode}"
 
 showInfo = (msg, url) ->
   msg.http(url)
@@ -43,7 +48,7 @@ showInfo = (msg, url) ->
           tracks = if data.track_count? then "#{data.track_count} tracks, " else ''
           msg.send "SoundCloud #{data.kind}: #{data.user.username} - #{data.title} (#{tracks}#{getDuration(data.duration)})"
       else
-        msg.send "Soundcloud: error: #{url} returned #{res.statusCode}"
+        msg.reply "SoundCloud Error: API lookup returned #{res.statusCode}"
 
 getDuration = (time) ->
   time = time / 1000
