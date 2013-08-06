@@ -1,6 +1,16 @@
 # phxtechbot
 
-hubot for #phxtech on freenode
+Hubot for #phxtech on freenode.
+
+The following env variables need to be configured for this to work.
+
+- `HUBOT_IRC_SERVER`
+- `HUBOT_IRC_ROOMS`
+- `HUBOT_IRC_NICK`
+
+See the [IRC Adapter docs](https://github.com/nandub/hubot-irc) for more information and other options.
+
+I can be run on a local machine using `bin/hubot -a irc -n phxtechbot` or via nodemon when developing via `nodemon -x bin/hubot -a irc -n phxtechbot`.
 
 # Hubot
 
