@@ -27,6 +27,18 @@ pickAnswers = (count = 1) ->
 
   return results
 
+sanitizeString = (str, trimPunctuation=false) ->
+  rules = [
+    new RegExp('\&reg\;', 'g')
+  ]
+
+  if trimPunctuation
+    rules.push new RegExp('\.$')
+
+  for rule in rules
+    str = str.replace(rule, '')
+  return str
+
 getResponse = ->
   question = pickQuestion()
   answers = pickAnswers(question.numAnswers)
@@ -34,13 +46,13 @@ getResponse = ->
   # console.log question, answers
 
   if parts.length is 1
-    return "#{question.text} #{answers[0].text}"
+    return "#{sanitizeString(question.text)} #{sanitizeString(answers[0].text)}"
 
   idx = 0
   response = ""
   for part in parts
     if answers[idx]?
-      response += "#{part}#{answers[idx].text}"
+      response += "#{sanitizeString(part)}#{sanitizeString(answers[idx].text, true)}"
     else
       response += part
     ++idx
