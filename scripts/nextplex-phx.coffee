@@ -41,7 +41,7 @@ get_events_upcoming = (msg, count) ->
       link = $(el).find('.event-name a')
       title = link.html()
       link = "#{site}#{link.attr('href')}"
-      msg.send "#{month} #{date} @ #{time} - #{title} [#{link}]"
+      msg.send "#{month} #{date} @ #{time} - #{title} [ #{link} ]"
 
 get_events_today = (msg) ->
   fetch_site msg, (err, res, body) ->
