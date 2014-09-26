@@ -4,10 +4,10 @@
 #  https://github.com/giphy/GiphyAPI
 #
 #Commands:
-#  gif me |gifbot me <query>
+#  gif me <query>
 #
 module.exports = (robot) ->
-  robot.hear /(gif|gifbot)( me){1} (.*)/i, (msg) ->
+  robot.hear /(gif)( me){1} (.*)/i, (msg) ->
     query = msg.match[3]
     url = 'http://api.giphy.com/v1/gifs/random'
     robot.http(url)
@@ -25,4 +25,4 @@ module.exports = (robot) ->
             msg.send "No gifs found for \"#{query}\""
             return
 
-          msg.reply gif
+          msg.send gif
