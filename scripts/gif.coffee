@@ -9,13 +9,12 @@
 module.exports = (robot) ->
   robot.hear /(gif|gifbot)( me){1} (.*)/i, (msg) ->
     query = msg.match[3]
-    query = query.split(' ').join('+')
     url = 'http://api.giphy.com/v1/gifs/random'
     robot.http(url)
       .query({
         api_key: 'dc6zaTOxFJmzC'
         limit: 1
-        tag: search
+        tag: query.split(' ').join('+')
         })
       .get() (err, res, body) ->
         if res.statusCode is 200
@@ -23,8 +22,7 @@ module.exports = (robot) ->
           gif = gif.data.image_original_url
 
           unless gif?
-            msg.send 'No gifs found for \'#{search}\''
+            msg.send "No gifs found for \"#{query}\""
             return
 
-          msg.send gif
-
+          msg.reply gif
