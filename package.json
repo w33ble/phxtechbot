@@ -20,11 +20,11 @@
     "url": "https://github.com/github/hubot.git"
   },
   "dependencies": {
+    "cheerio": "~0.12.0",
     "hubot": ">= 2.6.0 < 3.0.0",
-    "hubot-scripts": ">= 2.5.0 < 3.0.0",
     "hubot-irc": "~0.1.17",
-    "xml2js": "~0.2.8",
-    "cheerio": "~0.12.0"
+    "hubot-scripts": ">= 2.5.0 < 3.0.0",
+    "xml2js": "~0.2.8"
   },
   "engines": {
     "node": ">= 0.8.x",

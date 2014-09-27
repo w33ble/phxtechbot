@@ -10,9 +10,11 @@ module.exports = (robot) ->
   robot.hear /(gif)( me){1} (.*)/i, (msg) ->
     query = msg.match[3]
     url = 'http://api.giphy.com/v1/gifs/random'
+    if not process.env.HUBOT_GIPHY_KEY
+      return msg.reply "HUBOT_GIPHY_KEY must be defined. Visit http://api.giphy.com to get one."
     robot.http(url)
       .query({
-        api_key: 'dc6zaTOxFJmzC'
+        api_key: process.env.HUBOT_GIPHY_KEY
         limit: 1
         tag: query.split(' ').join('+')
         })
